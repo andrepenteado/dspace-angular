@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MenuService } from '../shared/menu/menu.service';
 import { MenuID } from '../shared/menu/menu-id.model';
 import { HostWindowService, WidthCategory } from '../shared/host-window.service';
+import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 
 /**
  * Represents the header with the logo and simple navigation
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     protected menuService: MenuService,
     protected windowService: HostWindowService,
+    @Inject(APP_CONFIG) protected appConfig: AppConfig
   ) {
   }
 

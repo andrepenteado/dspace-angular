@@ -25,8 +25,16 @@ import { DiscoverySortConfig } from './discovery-sort.config';
 import { LiveRegionConfig } from '../app/shared/live-region/live-region.config';
 import { SearchConfig } from './search-page-config.interface';
 import { AccessibilitySettingsConfig } from '../app/accessibility/accessibility-settings.config';
+import { AcessoAcademicoConfig } from './acesso-academico-config.interface';
 
 export class DefaultAppConfig implements AppConfig {
+
+  acessoAcademico: AcessoAcademicoConfig = {
+    logotipo: 'logo-custom.jpg',
+    titulo: 'Biblioteca Virtual',
+    subTitulo: 'Publicação online para testes e dissertações'
+  };
+
   production = false;
 
   // NOTE: will log all redux actions and transfers in console

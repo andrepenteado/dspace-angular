@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { combineLatest as observableCombineLatest, Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import {
 import { hasValue, isNotEmpty } from '../shared/empty.util';
 import { AuthTokenInfo } from '../core/auth/models/auth-token-info.model';
 import { isAuthenticated } from '../core/auth/selectors';
+import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 
 /**
  * This component represents the login page
@@ -39,7 +40,8 @@ export class LoginPageComponent implements OnDestroy, OnInit {
    * @param {Store<AppState>} store
    */
   constructor(private route: ActivatedRoute,
-              private store: Store<AppState>) {}
+              private store: Store<AppState>,
+              @Inject(APP_CONFIG) protected appConfig: AppConfig) {}
 
   /**
    * Initialize instance variables

@@ -3,3 +3,8 @@ rest:
   host: demo.dspace.org
   port: 443
   nameSpace: /server
+
+acessoAcademico:
+  logotipo: 'dspace-logo.svg'
+  titulo: 'Biblioteca Virtual'
+  subTitulo: 'Publicação online para testes e dissertações'

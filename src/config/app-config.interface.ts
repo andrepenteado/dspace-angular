@@ -25,8 +25,10 @@ import { DiscoverySortConfig } from './discovery-sort.config';
 import { LiveRegionConfig } from '../app/shared/live-region/live-region.config';
 import { SearchConfig } from './search-page-config.interface';
 import { AccessibilitySettingsConfig } from '../app/accessibility/accessibility-settings.config';
+import { AcessoAcademicoConfig } from './acesso-academico-config.interface';
 
 interface AppConfig extends Config {
+  acessoAcademico: AcessoAcademicoConfig;
   ui: UIServerConfig;
   rest: ServerConfig;
   production: boolean;
