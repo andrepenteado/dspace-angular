@@ -5,6 +5,6 @@ rest:
   nameSpace: /server
 
 acessoAcademico:
-  logotipo: 'dspace-logo.svg'
-  titulo: 'Biblioteca Virtual'
+  logotipo: 'dspace-logo.jpg'
+  titulo: 'DSpace'
   subTitulo: 'Publicação online para testes e dissertações'

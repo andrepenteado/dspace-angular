@@ -30,7 +30,7 @@ import { AcessoAcademicoConfig } from './acesso-academico-config.interface';
 export class DefaultAppConfig implements AppConfig {
 
   acessoAcademico: AcessoAcademicoConfig = {
-    logotipo: 'logo-custom.jpg',
+    logotipo: 'dspace-logo.svg',
     titulo: 'Biblioteca Virtual',
     subTitulo: 'Publicação online para testes e dissertações'
   };
