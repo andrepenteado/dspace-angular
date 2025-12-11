@@ -16,11 +16,11 @@
 </div>
 <div class="row">
   <div class="col-xs-12 col-md-4">
-    <ng-container *ngIf="!(mediaViewer.image || mediaViewer.video)">
+    <!--<ng-container *ngIf="!(mediaViewer.image || mediaViewer.video)">
       <ds-metadata-field-wrapper [hideIfNoTextContent]="false">
         <ds-themed-thumbnail [thumbnail]="object?.thumbnail | async"></ds-themed-thumbnail>
       </ds-metadata-field-wrapper>
-    </ng-container>
+    </ng-container>-->
     <div *ngIf="mediaViewer.image || mediaViewer.video" class="mb-2">
       <ds-themed-media-viewer [item]="object"></ds-themed-media-viewer>
     </div>
@@ -52,10 +52,14 @@
   <div class="col-xs-12 col-md-6">
     <ds-item-page-abstract-field [item]="object"></ds-item-page-abstract-field>
     <ds-generic-item-page-field [item]="object"
+      [fields]="['dc.description.resumo']"
+      [label]="'item.page.abstract'">
+    </ds-generic-item-page-field>
+
+    <ds-generic-item-page-field [item]="object"
       [fields]="['dc.description']"
       [label]="'item.page.description'">
     </ds-generic-item-page-field>
-
     <ds-generic-item-page-field [item]="object"
       [fields]="['dc.subject']"
       [separator]="', '"

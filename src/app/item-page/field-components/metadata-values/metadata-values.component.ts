@@ -112,4 +112,14 @@ export class MetadataValuesComponent implements OnChanges {
       return { target: '_blank', rel: 'noopener noreferrer' };
     }
   }
+
+  langLabelAbstract(lang: string): string {
+    const norm = (lang || '').toLowerCase().replace('-', '_');
+
+    if (norm === 'pt_br' || norm.startsWith('pt') || norm === 'por') {
+      return 'Resumo';
+    }
+
+    return 'Abstract';
+  }
 }
