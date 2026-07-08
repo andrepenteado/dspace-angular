@@ -1,0 +1,31 @@
+{
+  "server": "https://demo.dspace.org/server",
+  "user": "",
+  "password": "",
+
+  "collectionQuery": "Sample Collection",
+  "collectionUuid": null,
+
+  "metadata": {
+    "traditionalpageone": {
+      "dc.title": [{ "value": "Título da publicação de teste", "language": "pt_BR" }],
+      "dc.contributor.author": [
+        { "value": "Penteado, André", "language": null }
+      ],
+      "dc.date.issued": "2026-07-08",
+      "dc.type": "Artigo",
+      "dc.publisher": "Unesc",
+      "dc.description.abstract": [{ "value": "Resumo da publicação de teste submetida via REST API.", "language": "pt_BR" }]
+    },
+    "traditionalpagetwo": {
+      "dc.subject": ["Teste", "Integração", "REST API"]
+    }
+  },
+
+  "files": [
+    {
+      "path": "./artigo.pdf",
+      "description": "Texto completo"
+    }
+  ]
+}
