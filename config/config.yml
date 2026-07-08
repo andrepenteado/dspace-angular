@@ -8,3 +8,19 @@ acessoAcademico:
   logotipo: 'dspace-logo.jpg'
   titulo: 'DSpace'
   subTitulo: 'Publicação online para testes e dissertações'
+  # Metadados configuráveis das páginas de item (ver config/PLANO-METADADOS-CONFIGURAVEIS.md).
+  # Descomente e ajuste APENAS no config.yml do deployment do cliente que usa o
+  # recurso — este arquivo entra na imagem Docker compartilhada (Dockerfile.dist).
+  # Bloco completo já gerado para a UNESC em config/acesso-academico-unesc.yml.
+  # itemPage:
+  #   # Campos extras exibidos na página simplificada do item
+  #   metadadosAdicionais:
+  #     - campos: [ 'dc.contributor.advisor' ]
+  #       label: 'Orientador'
+  #     - campos: [ 'dc.contributor.other' ]
+  #       label: 'Coorientador'
+  #   # Labels da página completa (/full); campo ausente = exibe o nome técnico
+  #   labelsMetadados:
+  #     dc.title: 'Título'
+  #     dc.contributor.advisor: 'Orientador'
+  #     dc.date.issued: 'Data de publicação'

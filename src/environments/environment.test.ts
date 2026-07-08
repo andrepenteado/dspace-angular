@@ -6,6 +6,16 @@ import { NotificationAnimationsType } from '../app/shared/notifications/models/n
 export const environment: BuildConfig = {
   production: false,
 
+  acessoAcademico: {
+    logotipo: 'dspace-logo.svg',
+    titulo: 'Biblioteca Virtual',
+    subTitulo: 'Publicação online para testes e dissertações',
+    itemPage: {
+      metadadosAdicionais: [],
+      labelsMetadados: {},
+    },
+  },
+
   // Angular Universal settings
   universal: {
     preboot: true,

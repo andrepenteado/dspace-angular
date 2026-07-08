@@ -18,7 +18,7 @@
             <tbody>
             <ng-container *ngFor="let mdEntry of (metadata$ | async) | keyvalue">
               <tr *ngFor="let mdValue of mdEntry.value">
-                <td>{{mdEntry.key}}</td>
+                <td>{{ appConfig.acessoAcademico?.itemPage?.labelsMetadados?.[mdEntry.key] || mdEntry.key }}</td>
                 <td>{{mdValue.value}}</td>
                 <td>{{mdValue.language}}</td>
               </tr>

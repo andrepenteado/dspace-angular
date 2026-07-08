@@ -1,0 +1,77 @@
+# Bloco `acessoAcademico.itemPage` para o deployment da UNESC.
+#
+# Gerado a partir de config/submission-forms.xml-unesc com:
+#   node scripts/extract-metadata-labels.js config/submission-forms.xml-unesc \
+#     publicationStep,traditionalpageone,traditionalpagetwo,personStep,projectStep,orgUnitStep,journalStep,journalVolumeStep,journalIssueStep --only
+#
+# Como usar: copiar o bloco abaixo para dentro de `acessoAcademico:` no
+# config.yml do deployment do cliente (ou mesclar via DSPACE_APP_CONFIG_PATH).
+# NÃO ativar no config.yml deste repositório — ele é copiado para a imagem
+# Docker compartilhada por todos os clientes (Dockerfile.dist).
+#
+# - metadadosAdicionais: campos extras exibidos na página simplificada do item.
+# - labelsMetadados: labels da página completa (/full); campo sem entrada
+#   continua exibindo o nome técnico. Labels extraídos do submission-form do
+#   cliente e traduzidos para pt-BR em 08/07/2026 (os campos customizados já
+#   vieram em português do próprio formulário).
+
+acessoAcademico:
+  itemPage:
+    metadadosAdicionais:
+      - campos: [ 'dc.contributor.advisor' ]
+        label: 'Orientador'
+      - campos: [ 'dc.contributor.other' ]
+        label: 'Coorientador'
+      - campos: [ 'dc.contributor.editor' ]
+        label: 'Organizador'
+      - campos: [ 'dc.contributor.coordinator' ]
+        label: 'Coordenador'
+    labelsMetadados:
+      dc.contributor.advisor: 'Orientador'
+      dc.contributor.other: 'Coorientador'
+      dc.contributor.editor: 'Organizador'
+      dc.contributor.coordinator: 'Coordenador'
+      dc.title: 'Título'
+      dc.title.alternative: 'Outros títulos'
+      dc.description.abstract: 'Resumo / Abstract'
+      dc.date.issued: 'Data de publicação'
+      dc.publisher: 'Editora'
+      dc.identifier.citation: 'Citação'
+      dc.relation.ispartofseries: 'Série/Relatório nº'
+      dc.identifier: 'Identificadores'
+      dc.type: 'Tipo'
+      dc.language.iso: 'Idioma'
+      dc.contributor.author: 'Autor'
+      dc.subject: 'Palavras-chave'
+      dc.description.sponsorship: 'Agência de fomento'
+      dc.description: 'Descrição'
+      person.familyName: 'Sobrenome'
+      person.givenName: 'Nome'
+      person.email: 'E-mail'
+      person.identifier.orcid: 'ORCID'
+      person.birthDate: 'Data de nascimento'
+      person.identifier.staffid: 'Matrícula'
+      person.jobTitle: 'Cargo'
+      project.identifier.status: 'Situação'
+      project.identifier.startdate: 'Data de início'
+      project.identifier.expectedcompletion: 'Conclusão prevista'
+      project.startDate: 'Data de início'
+      project.endDate: 'Data de término'
+      project.amount: 'Valor'
+      project.amount.currency: 'Moeda'
+      organization.legalName: 'Nome'
+      organization.foundingDate: 'Data de fundação'
+      organization.address.addressLocality: 'Cidade'
+      organization.address.addressCountry: 'País'
+      creativework.editor: 'Editor'
+      creativeworkseries.issn: 'ISSN'
+      creativework.publisher: 'Editora'
+      publicationvolume.volumeNumber: 'Volume'
+      creativework.datePublished: 'Data de publicação'
+      publicationissue.issueNumber: 'Número'
+      creativework.keywords: 'Palavras-chave'
+      # Campos de sistema (fora do submission-form) exibidos na página /full
+      dc.date.accessioned: 'Data de depósito'
+      dc.date.available: 'Data de disponibilização'
+      dc.identifier.uri: 'URI'
+      dc.description.provenance: 'Proveniência'

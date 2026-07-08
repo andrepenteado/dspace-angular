@@ -32,7 +32,11 @@ export class DefaultAppConfig implements AppConfig {
   acessoAcademico: AcessoAcademicoConfig = {
     logotipo: 'dspace-logo.svg',
     titulo: 'Biblioteca Virtual',
-    subTitulo: 'Publicação online para testes e dissertações'
+    subTitulo: 'Publicação online para testes e dissertações',
+    itemPage: {
+      metadadosAdicionais: [],
+      labelsMetadados: {}
+    }
   };
 
   production = false;
