@@ -31,6 +31,9 @@ module.exports = Object.assign({}, commonExports, {
     }),
   ],
   devServer: {
+    // Permite acessar/atualizar rotas do Angular diretamente pela URL
+    // (ex.: http://localhost:4000/items/<uuid>) no modo desenvolvimento
+    historyApiFallback: true,
     setupMiddlewares(middlewares, server) {
       buildAppConfig(join(process.cwd(), 'src/assets/config.json'));
       return middlewares;

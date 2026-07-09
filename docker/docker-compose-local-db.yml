@@ -1,0 +1,96 @@
+#
+# Backend DSpace 7.6 + Solr para desenvolvimento local, usando o banco
+# PostgreSQL JÁ EXISTENTE no host (banco "dspace", usuário/senha dspace/dspace,
+# porta 5432) em vez do container "dspacedb" do docker-compose-rest.yml.
+#
+# Uso:
+#   docker compose -p dspace-local -f docker/docker-compose-local-db.yml up -d
+#   # primeira vez (ou após restaurar um dump): reindexar o Solr
+#   docker exec dspace /dspace/bin/dspace index-discovery -b
+#   # frontend (UI em http://localhost:4000, REST em http://localhost:8080/server):
+#   ./scripts/start-dev.sh local
+#
+networks:
+  dspacenet:
+    ipam:
+      config:
+        # Subnet custom para podermos confiar nas requisições host -> container.
+        # Se mudar, ajuste também 'proxies.trusted.ipranges' abaixo.
+        - subnet: 172.24.0.0/16
+services:
+  # DSpace (backend)
+  dspace:
+    container_name: dspace
+    image: "${DOCKER_REGISTRY:-docker.io}/${DOCKER_OWNER:-dspace}/dspace:${DSPACE_VER:-dspace-7_x-test}"
+    environment:
+      # __P__ => "." (e.g. dspace__P__dir => dspace.dir)
+      dspace__P__dir: /dspace
+      dspace__P__name: 'DSpace Local (banco do host)'
+      dspace__P__server__P__url: http://localhost:8080/server
+      # ui.url define também o CORS liberado para o dev server do Angular
+      dspace__P__ui__P__url: http://localhost:4000
+      # Banco do host, acessado via gateway do Docker
+      db__P__url: 'jdbc:postgresql://host.docker.internal:5432/dspace'
+      db__P__username: dspace
+      db__P__password: dspace
+      solr__P__server: http://dspacesolr:8983/solr
+      proxies__P__trusted__P__ipranges: '172.24.0'
+      LOGGING_CONFIG: /dspace/config/log4j2-container.xml
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      - dspacesolr
+    networks:
+      - dspacenet
+    ports:
+      - published: 8080
+        target: 8080
+    stdin_open: true
+    tty: true
+    volumes:
+      # Assetstore local (vazio se o banco veio de um dump sem os arquivos)
+      - assetstore:/dspace/assetstore
+      # Customizações de submissão da UNESC (mesmos arquivos usados em produção)
+      - ../config/submission-forms.xml-unesc:/dspace/config/submission-forms.xml
+      - ../config/item-submission.xml-unesc:/dspace/config/item-submission.xml
+    # 1. Espera o Postgres do host responder
+    # 2. Roda as migrações (no-op se o banco já está em dia)
+    # 3. Sobe o Tomcat
+    entrypoint:
+    - /bin/bash
+    - '-c'
+    - |
+      while (!</dev/tcp/host.docker.internal/5432) > /dev/null 2>&1; do sleep 1; done;
+      /dspace/bin/dspace database migrate
+      catalina.sh run
+  # Solr (índice de busca/navegação — reindexar com index-discovery, ver topo)
+  dspacesolr:
+    container_name: dspacesolr
+    image: "${DOCKER_REGISTRY:-docker.io}/${DOCKER_OWNER:-dspace}/dspace-solr:${DSPACE_VER:-dspace-7_x}"
+    networks:
+      - dspacenet
+    ports:
+      - published: 8983
+        target: 8983
+    stdin_open: true
+    tty: true
+    working_dir: /var/solr/data
+    volumes:
+      - solr_data:/var/solr/data
+    entrypoint:
+    - /bin/bash
+    - '-c'
+    - |
+      init-var-solr
+      precreate-core authority /opt/solr/server/solr/configsets/authority
+      cp -r /opt/solr/server/solr/configsets/authority/* authority
+      precreate-core oai /opt/solr/server/solr/configsets/oai
+      cp -r /opt/solr/server/solr/configsets/oai/* oai
+      precreate-core search /opt/solr/server/solr/configsets/search
+      cp -r /opt/solr/server/solr/configsets/search/* search
+      precreate-core statistics /opt/solr/server/solr/configsets/statistics
+      cp -r /opt/solr/server/solr/configsets/statistics/* statistics
+      exec solr -f
+volumes:
+  assetstore:
+  solr_data:

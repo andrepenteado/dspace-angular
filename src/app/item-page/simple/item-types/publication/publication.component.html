@@ -15,12 +15,6 @@
 </div>
 <div class="row">
   <div class="col-xs-12 col-md-4">
-    <ds-generic-item-page-field *ngFor="let md of appConfig.acessoAcademico?.itemPage?.metadadosAdicionais"
-      [item]="object"
-      [fields]="md.campos"
-      [label]="md.label"
-      [separator]="md.separador">
-    </ds-generic-item-page-field>
     <ng-container *ngIf="!(mediaViewer.image || mediaViewer.video)">
       <ds-metadata-field-wrapper [hideIfNoTextContent]="false">
         <ds-themed-thumbnail [thumbnail]="object?.thumbnail | async"></ds-themed-thumbnail>
@@ -75,7 +69,12 @@
       [fields]="['dc.description']"
       [label]="'publication.page.description'">
     </ds-generic-item-page-field>
-
+    <ds-generic-item-page-field *ngFor="let md of appConfig.acessoAcademico?.itemPage?.metadadosAdicionais"
+      [item]="object"
+      [fields]="md.campos"
+      [label]="md.label"
+      [separator]="md.separador || '<br>'">
+    </ds-generic-item-page-field>
     <ds-generic-item-page-field [item]="object"
       [fields]="['dc.subject']"
       [separator]="', '"

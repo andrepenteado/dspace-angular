@@ -8,6 +8,8 @@
 #   ./scripts/start-dev.sh            # config padrão (config/config.yml)
 #   ./scripts/start-dev.sh unesc     # aplica config/acesso-academico-unesc.yml
 #                                    # por cima (metadados configuráveis do cliente)
+#   ./scripts/start-dev.sh local     # backend local (docker/docker-compose-local-db.yml
+#                                    # contra o banco PostgreSQL do host)
 #
 # A UI sobe em http://localhost:4000. Mudanças em config/*.yml exigem
 # reiniciar o script (o config é embutido no bundle no início do serve).
@@ -48,5 +50,5 @@ if [ $# -ge 1 ]; then
   echo "==> Config do cliente aplicada: $CONFIG_CLIENTE"
 fi
 
-echo "==> Subindo em http://localhost:4000 (backend: demo.dspace.org)..."
+echo "==> Subindo em http://localhost:4000 (backend: definido no config aplicado)..."
 exec yarn run start:dev

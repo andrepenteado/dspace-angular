@@ -305,6 +305,29 @@ Restante, a conferir num deployment real (homologação da UNESC):
   primeira coluna (antes da miniatura/arquivos), em `publication` e `untyped-item`.
   Specs re-executados: OK.
 
+## Ajustes de 09/07/2026 (validação com banco local da UNESC)
+
+- Ambiente local de testes: `docker/docker-compose-local-db.yml` (backend 7.6 +
+  Solr contra o banco PostgreSQL do host, restaurado de produção da UNESC) e
+  `config/acesso-academico-local.yml` (`rest` local + cópia do bloco da UNESC);
+  uso: `./scripts/start-dev.sh local`.
+- Posição final dos metadados adicionais na página simplificada: **coluna da
+  direita, entre Descrição (`dc.description`) e Palavras-chave (`dc.subject`)**,
+  em `publication` e `untyped-item`.
+- Valores múltiplos dos metadados adicionais agora quebram linha por padrão
+  (`[separator]="md.separador || '<br>'"`); `separador` no YAML sobrepõe.
+- Labels novos (campos encontrados na base real): `dc.coverage.spatial`
+  (Cobertura espacial), `dc.date.created` (Data de criação), `dspace.entity.type`
+  (Tipo de entidade) — adicionados também no inventário do apdevops.
+- `historyApiFallback: true` no dev server (`webpack/webpack.browser.ts`) para
+  acessar rotas profundas por URL no modo desenvolvimento.
+- Achado de dados: item `8c0d9686-4882-4390-a6ee-26b82147f22b` com
+  `dspace.entity.type` duplicado abortava o `index-discovery -b` (índice ficava
+  pela metade). Corrigido no banco local (removida a linha `place=1`);
+  **verificar/corrigir em produção da UNESC** com a mesma query e reindexar.
+- Makefile: build da imagem atualizado para `1.1.0-dist` (casando com o
+  `versaoFrontend` da UNESC no inventário).
+
 ## Adequação da role Ansible `apcode.docker.dspace` (proposta de 08/07/2026)
 
 ### Como a role funciona hoje (avaliação)
