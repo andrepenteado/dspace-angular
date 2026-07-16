@@ -16,7 +16,7 @@
         <div class="table-responsive">
           <table class="table  table-striped">
             <tbody>
-            <ng-container *ngFor="let mdEntry of (metadata$ | async) | keyvalue">
+            <ng-container *ngFor="let mdEntry of (metadata$ | async) | keyvalue: compararMetadados">
               <tr *ngFor="let mdValue of mdEntry.value">
                 <td>{{ appConfig.acessoAcademico?.itemPage?.labelsMetadados?.[mdEntry.key] || mdEntry.key }}</td>
                 <td>{{mdValue.value}}</td>

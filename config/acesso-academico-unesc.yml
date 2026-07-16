@@ -16,6 +16,8 @@
 #   continua exibindo o nome técnico. Labels extraídos do submission-form do
 #   cliente e traduzidos para pt-BR em 08/07/2026 (os campos customizados já
 #   vieram em português do próprio formulário).
+#   A ORDEM das chaves define a ordem de exibição na página /full; campos
+#   sem label ficam no fim, em ordem alfabética.
 
 acessoAcademico:
   itemPage:
@@ -29,24 +31,33 @@ acessoAcademico:
       - campos: [ 'dc.contributor.coordinator' ]
         label: 'Coordenador'
     labelsMetadados:
+      dc.title: 'Título'
+      dc.title.alternative: 'Outros títulos'
+      dc.contributor.author: 'Autor'
       dc.contributor.advisor: 'Orientador'
       dc.contributor.other: 'Coorientador'
       dc.contributor.editor: 'Organizador'
       dc.contributor.coordinator: 'Coordenador'
-      dc.title: 'Título'
-      dc.title.alternative: 'Outros títulos'
-      dc.description.abstract: 'Resumo / Abstract'
       dc.date.issued: 'Data de publicação'
       dc.publisher: 'Editora'
+      dc.description.abstract: 'Resumo / Abstract'
+      dc.description: 'Descrição'
+      dc.description.sponsorship: 'Agência de fomento'
+      dc.subject: 'Palavras-chave'
       dc.identifier.citation: 'Citação'
       dc.relation.ispartofseries: 'Série/Relatório nº'
       dc.identifier: 'Identificadores'
+      dc.identifier.uri: 'URI'
       dc.type: 'Tipo'
       dc.language.iso: 'Idioma'
-      dc.contributor.author: 'Autor'
-      dc.subject: 'Palavras-chave'
-      dc.description.sponsorship: 'Agência de fomento'
-      dc.description: 'Descrição'
+      dc.coverage.spatial: 'Cobertura espacial'
+      dc.date.created: 'Data de criação'
+      # Campos de sistema (fora do submission-form) exibidos na página /full
+      dc.date.accessioned: 'Data de depósito'
+      dc.date.available: 'Data de disponibilização'
+      dc.description.provenance: 'Proveniência'
+      dspace.entity.type: 'Tipo de entidade'
+      # Campos de entidades (Person, Project, OrgUnit, Journal...)
       person.familyName: 'Sobrenome'
       person.givenName: 'Nome'
       person.email: 'E-mail'
@@ -72,11 +83,3 @@ acessoAcademico:
       creativework.datePublished: 'Data de publicação'
       publicationissue.issueNumber: 'Número'
       creativework.keywords: 'Palavras-chave'
-      # Campos de sistema (fora do submission-form) exibidos na página /full
-      dc.date.accessioned: 'Data de depósito'
-      dc.date.available: 'Data de disponibilização'
-      dc.identifier.uri: 'URI'
-      dc.description.provenance: 'Proveniência'
-      dc.coverage.spatial: 'Cobertura espacial'
-      dc.date.created: 'Data de criação'
-      dspace.entity.type: 'Tipo de entidade'

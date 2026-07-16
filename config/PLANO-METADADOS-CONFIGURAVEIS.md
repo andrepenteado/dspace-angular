@@ -469,3 +469,23 @@ velha apenas ignora as chaves extras — não quebra.
 `templates/config.yml` não quota as strings (`titulo: {{ dspace.titulo }}`);
 um título contendo `:` quebraria o YAML. Vale trocar por `| to_json` (quota
 automaticamente) na mesma mexida — opcional.
+
+## Ajustes de 16/07/2026 (ordenação dos metadados)
+
+Pedido do cliente (UNESC): exibir os campos adicionais na ordem Orientador,
+Coorientador, Organizador e Coordenador.
+
+- **Página simplificada**: já seguia a ordem do array `metadadosAdicionais` no
+  YAML (o template itera com `*ngFor`) — nenhuma mudança necessária.
+- **Página completa (/full)**: o pipe `keyvalue` ordenava alfabeticamente pela
+  chave. Adicionado o comparador `compararMetadados` em
+  `full-item-page.component.ts`: a ordem de exibição passa a ser a ordem das
+  chaves em `acessoAcademico.itemPage.labelsMetadados`; campos sem label ficam
+  no fim, em ordem alfabética. Ou seja, a ordem do /full é controlada 100% pelo
+  YAML do deployment (montado pelo Ansible) — ajustes futuros de ordem não
+  exigem novo build.
+- `labelsMetadados` reordenado nos 3 YAMLs (host_vars do apdevops,
+  `acesso-academico-unesc.yml` e a cópia `acesso-academico-local.yml`):
+  Título → Autor → Orientador → Coorientador → Organizador → Coordenador →
+  demais campos descritivos → campos de sistema → campos de entidades.
+- Imagem: mantida a tag `1.1.0-dist` (rebuild da mesma tag, ainda não publicada).

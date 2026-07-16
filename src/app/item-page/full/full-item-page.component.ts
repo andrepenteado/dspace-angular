@@ -5,7 +5,7 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ItemPageComponent } from '../simple/item-page.component';
-import { MetadataMap } from '../../core/shared/metadata.models';
+import { MetadataMap, MetadataValue } from '../../core/shared/metadata.models';
 import { ItemDataService } from '../../core/data/item-data.service';
 
 import { RemoteData } from '../../core/data/remote-data';
@@ -13,7 +13,7 @@ import { Item } from '../../core/shared/item.model';
 
 import { fadeInOut } from '../../shared/animations/fade';
 import { hasValue } from '../../shared/empty.util';
-import { Location } from '@angular/common';
+import { KeyValue, Location } from '@angular/common';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { ServerResponseService } from '../../core/services/server-response.service';
 import { SignpostingDataService } from '../../core/data/signposting-data.service';
@@ -37,6 +37,12 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
   itemRD$: BehaviorSubject<RemoteData<Item>>;
 
   metadata$: Observable<MetadataMap>;
+
+  /**
+   * Ordem de exibição dos metadados na tabela: segue a ordem das chaves de
+   * `acessoAcademico.itemPage.labelsMetadados` no config do deployment.
+   */
+  private ordemMetadados: string[] = [];
 
   /**
    * True when the itemRD has been originated from its workspaceite/workflowitem, false otherwise.
@@ -63,6 +69,7 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
   /*** AoT inheritance fix, will hopefully be resolved in the near future **/
   ngOnInit(): void {
     super.ngOnInit();
+    this.ordemMetadados = Object.keys(this.appConfig.acessoAcademico?.itemPage?.labelsMetadados ?? {});
     this.metadata$ = this.itemRD$.pipe(
       map((rd: RemoteData<Item>) => rd.payload),
       filter((item: Item) => hasValue(item)),
@@ -73,6 +80,26 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
       })
     );
   }
+
+  /**
+   * Comparador do pipe `keyvalue`: ordena os metadados conforme a posição da
+   * chave em `labelsMetadados`; chaves sem label ficam no fim, em ordem
+   * alfabética.
+   */
+  compararMetadados = (a: KeyValue<string, MetadataValue[]>, b: KeyValue<string, MetadataValue[]>): number => {
+    const posA = this.ordemMetadados.indexOf(a.key);
+    const posB = this.ordemMetadados.indexOf(b.key);
+    if (posA === -1 && posB === -1) {
+      return a.key.localeCompare(b.key);
+    }
+    if (posA === -1) {
+      return 1;
+    }
+    if (posB === -1) {
+      return -1;
+    }
+    return posA - posB;
+  };
 
   /**
    * Navigate back in browser history.
